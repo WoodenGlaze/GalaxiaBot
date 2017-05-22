@@ -22,7 +22,7 @@ class Botadmin:
 	async def load(self, *, module : str):
 		"""Loads a module"""
 		try:
-			self.bot.load_extension(module)
+			self.bot.load_extension('cogs.'+module)
 		except Exception as e:
 			await self.bot.say('\N{PISTOL}')
 			await self.bot.say('{}: {}'.format(type(e).__name__, e))
@@ -36,7 +36,7 @@ class Botadmin:
 		"""Unloads a module"""
 		try:
 			print('Unloading {}'.format(module))
-			self.bot.unload_extension(module)
+			self.bot.unload_extension('cogs.'+module)
 		except Exception as e:
 			await self.bot.say('\N{PISTOL}')
 			await self.bot.say('{}: {}'.format(type(e).__name__, e))
@@ -49,8 +49,8 @@ class Botadmin:
 	async def _reload(self, *, module : str):
 		"""Reloads a module"""
 		try:
-			self.bot.unload_extension(module)
-			self.bot.load_extension(module)
+			self.bot.unload_extension('cogs.'+module)
+			self.bot.load_extension('cogs.'+module)
 		except Exception as e:
 			await self.bot.say('\N{PISTOL}')
 			await self.bot.say('{}: {}'.format(type(e).__name__, e))

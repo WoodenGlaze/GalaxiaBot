@@ -30,7 +30,7 @@ else:
 initial_extensions = [
     'cogs.moderation',
     'cogs.botadmin',
-    
+
 
 ]
 
@@ -349,6 +349,9 @@ if __name__ == '__main__':
             bot.load_extension(extension)
         except Exception as e:
             print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__, e))
+
+
+
 
 
 bot.run(token)
