@@ -6,3 +6,7 @@ cogs/__pycache__/botadmin\.cpython-36\.pyc
 cogs/utils/__pycache__/checks\.cpython-36\.pyc
 
 cogs/__pycache__/
+
+*.exe
+
+stats\.db

@@ -198,6 +198,7 @@ class Music:
         opts = {
             'default_search': 'auto',
             'quiet': True,
+            'codec': 'AVStream.codecpar',
         }
         
         if state.voice is None:
@@ -351,7 +352,7 @@ async def on_resumed():
 @bot.event
 async def on_member_join(member):
 	server = member.server
-	await bot.set_roles(member, discord.Object(316201434561642496))
+	await bot.add_roles(member, discord.Object(316201434561642496))
 
 
 @bot.event
