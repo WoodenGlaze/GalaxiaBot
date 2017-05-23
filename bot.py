@@ -301,7 +301,7 @@ class Music:
             await self.bot.say('Now playing {} [skips: {}/3]'.format(state.current, skip_count))
 
 
-version = '0.0.2b'
+version = '0.0.3a'
 
 
 #define credentials file + open it.
