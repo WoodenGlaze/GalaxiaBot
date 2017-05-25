@@ -1,13 +1,13 @@
 #Made by:
 
 print("""
-.########..#######..##....##.##....##......####.............##....###....##....##.########......##.##.......#######..########.##..........#####..
-....##....##.....##.###...##..##..##......##..##............##...##.##...##...##..##............##.##......##.....##.##.......##....##...##...##.
-....##....##.....##.####..##...####........####.............##..##...##..##..##...##..........#########....##........##.......##....##..##.....##
-....##....##.....##.##.##.##....##........####..............##.##.....##.#####....######........##.##......########..#######..##....##..##.....##
-....##....##.....##.##..####....##.......##..##.##....##....##.#########.##..##...##..........#########....##.....##.......##.#########.##.....##
-....##....##.....##.##...###....##.......##...##......##....##.##.....##.##...##..##............##.##......##.....##.##....##.......##...##...##.
-....##.....#######..##....##....##........####..##.....######..##.....##.##....##.########......##.##.......#######...######........##....#####..
+.########..#######..##....##.##....##
+....##....##.....##.###...##..##..##.
+....##....##.....##.####..##...####..
+....##....##.....##.##.##.##....##...
+....##....##.....##.##..####....##...
+....##....##.....##.##...###....##...
+....##.....#######..##....##....##...
 .########..########..########..######..########.##....##.########..##.                                                                           
 .##.....##.##.....##.##.......##....##.##.......###...##....##....####                                                                           
 .##.....##.##.....##.##.......##.......##.......####..##....##.....##.                                                                           
@@ -61,6 +61,8 @@ else:
 initial_extensions = [
     'cogs.moderation',
     'cogs.botadmin',
+    'cogs.utility',
+    'cogs.sqlitetest',
 
 
 ]
@@ -379,6 +381,26 @@ async def on_server_join(server):
 	osjembed.add_field(name='How to invoke commands:', value='g)help or @{0.name} help')
 	osjembed.add_field(name='Version:', value=version)
 	await bot.send_message(server, embed=osjembed)
+
+"""
+@bot.event
+async def on_message(message):
+	await bot.process_commands(message)
+	if message.author.id == bot.user.id:
+		print('Not now!')
+		return
+	if 'ty' in message.content:
+		await bot.send_message(message.channel, '{0.name} thanked {1}'.format(message.author, [(x.name) for x in message.mentions]).strip('[ ] "'))
+		print('Someone thanked someone.')
+	if 'TY' in message.content:
+		await bot.send_message(message.channel, '{0.name} thanked {1}'.format(message.author, [(x.name) for x in message.mentions]).strip('[ ] "'))
+		print('Someone thanked someone.')
+	if 'thank' in message.content:
+		await bot.send_message(message.channel, '{0.name} thanked {1}'.format(message.author, [(x.name) for x in message.mentions]).strip('[ ] "'))
+		print('Someone thanked someone.')
+	if 'Thank' in message.content:
+		await bot.send_message(message.channel, '{0.name} thanked {1}'.format(message.author, [(x.name) for x in message.mentions]).strip('[ ] "'))
+		print('Someone thanked someone.')"""
 
 
 if __name__ == '__main__':

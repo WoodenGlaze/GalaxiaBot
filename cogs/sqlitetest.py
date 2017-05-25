@@ -51,11 +51,12 @@ class StatsTest:
 		currency = '0'
 		conn = sqlite3.connect('C:/Users/Glaze/Desktop/DB/stats.db')
 		c = conn.cursor()
-		if c.execute("SELECT * FROM stats WHERE uid = ('%s')" % ctx.message.author.id) == True:
+		m = c.execute("SELECT * FROM stats WHERE uid = ('%s')" % ctx.message.author.id)
+		"""if 
 			await self.bot.say('Already registered.')
-		else:
-			c.execute("INSERT INTO stats VALUES (?, ?, ?, ?, ?, ?)", (id, user, uid, rep, thanks, currency))
-			await self.bot.say('Registered!')
+		else:"""
+		c.execute("INSERT INTO stats VALUES (?, ?, ?, ?, ?, ?)", (id, user, uid, rep, thanks, currency))
+		await self.bot.say('Registered!')
 		conn.commit()
 		conn.close()
 
@@ -79,6 +80,10 @@ class StatsTest:
 		await self.bot.say('{0.name} has given {1.name} a reputation point!'.format(ctx.message.author, mem))
 		conn.commit()
 		conn.close()
+
+
+
+
 
 
 def setup(bot):
