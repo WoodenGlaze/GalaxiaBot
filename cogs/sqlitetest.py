@@ -19,7 +19,16 @@ class StatsTest:
 		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		c.execute('''DROP TABLE stats''')
-		await self.bot.say('Dropped table.')
+		c.execute('''CREATE TABLE stats
+             (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+             user text, 
+             uid numeric, 
+             rep real NOT NULL DEFAULT 0, 
+             thanks real NOT NULL DEFAULT 0,
+             currency INTERGER NOT NULL DEFAULT 0)''')
+		conn.commit()
+		conn.close()	
+		await self.bot.say('Nuked table and remade it!')
 
 	@commands.command(hidden=True)
 	@checks.is_owner()
@@ -53,8 +62,6 @@ class StatsTest:
 		c = conn.cursor()
 		for row in c.execute('SELECT uid FROM stats WHERE uid = ("%s")' % ctx.message.author.id):
 			await self.bot.say(row)
-		#m = row
-		#if ctx.message.author.id in m: 
 			await self.bot.say('Already registered.')
 			conn.close()
 		else:
@@ -79,10 +86,13 @@ class StatsTest:
 		user = mem.name
 		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
-		c.execute("UPDATE stats SET rep = rep + 1 WHERE ('%s');" % mem.id)
-		await self.bot.say('{0.name} has given {1.name} a reputation point!'.format(ctx.message.author, mem))
-		conn.commit()
-		conn.close()
+		if mem.id == ctx.message.author.id:
+			await self.bot.say("You cannot give yourself a reputation point!")
+		else:
+			c.execute("UPDATE stats SET rep = rep + 1 WHERE uid = ('%s')" % mem.id)
+			await self.bot.say('{0.name} has given {1.name} a reputation point!'.format(ctx.message.author, mem))
+			conn.commit()
+			conn.close()
 
 
 
