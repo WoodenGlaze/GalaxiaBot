@@ -76,8 +76,51 @@ class StatsTest:
 		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		for row in c.execute('SELECT * FROM stats ORDER BY user'):
-			await self.bot.say(row)
+			await self.bot.say(str(row).strip("',()"))
+			a = str(row).strip(" '")
+			b = str(a).strip(" ,")
+			c = str(b).strip(" (")
+			d = str(c).strip(" )")
+			await self.bot.say(d)
 		conn.close()
+
+
+	@commands.command(pass_context=True)
+	async def user(self, ctx, member:discord.Member = None):
+		"""Gets user information"""
+		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		c = conn.cursor()
+		emmem1 = discord.Embed(title='Member Information')
+		emmem2 = discord.Embed(title='Member Information')
+
+		if member is None:
+			member = ctx.message.author
+
+		for row in c.execute('SELECT uid FROM stats WHERE uid = ("%s")' % ctx.message.author.id):
+			for reputation in c.execute('SELECT rep FROM stats WHERE uid = ("%s")' % member.id):
+				rep = reputation
+			for thanks in c.execute('SELECT thanks FROM stats WHERE uid = ("%s")' % member.id):
+				tnx = thanks
+			for currency in c.execute('SELECT currency FROM stats WHERE uid = ("%s")' % member.id):
+				cur = currency
+			emmem1.set_author(name='{0.display_name}'.format(member), icon_url='{}'.format(member.avatar_url or member.default_avatar_url))
+			emmem1.set_thumbnail(url='{0.avatar_url}'.format(member))
+			emmem1.add_field(name='User ID:', value='{0.id}'.format(member), inline=True)
+			emmem1.add_field(name='Created at:', value='{0.created_at}'.format(member), inline=True)
+			emmem1.add_field(name='Joined at:', value='{0.joined_at}'.format(member), inline=True)
+			emmem1.add_field(name='Reputation:', value='{}'.format(str(rep).strip("()")))
+			emmem1.add_field(name='Thanks:', value='{}'.format(str(tnx).strip("()")))		
+			emmem1.add_field(name='Money:', value='{}'.format(str(cur).strip("()")))
+			await self.bot.say(embed=emmem1)
+			conn.close()
+		else:
+			emmem2.set_author(name='{0.display_name}'.format(member), icon_url='{}'.format(member.avatar_url or member.default_avatar_url))
+			emmem2.set_thumbnail(url='{0.avatar_url}'.format(member))
+			emmem2.add_field(name='User ID:', value='{0.id}'.format(member), inline=True)
+			emmem2.add_field(name='Created at:', value='{0.created_at}'.format(member), inline=True)
+			emmem2.add_field(name='Joined at:', value='{0.joined_at}'.format(member), inline=True)
+			await self.bot.say(embed=emmem2)
+
 
 
 	@commands.command(pass_context=True)

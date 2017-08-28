@@ -34,24 +34,24 @@ class Utility:
 		await self.bot.say(embed=emin)
 
 
-	@commands.command(pass_context=True)
-	async def user(self, ctx, member:discord.Member = None):
-		"""Gets user information"""
-		emmem = discord.Embed(title='Member Information')
-
-
-		if member is None:
-			member = ctx.message.author
-
-
-		emmem.set_author(name='{0.display_name}'.format(member), icon_url='{}'.format(member.avatar_url or member.default_avatar_url))
-		emmem.set_thumbnail(url='{0.avatar_url}'.format(member))
-		emmem.add_field(name='User ID:', value='{0.id}'.format(member), inline=True)
-		emmem.add_field(name='Created at:', value='{0.created_at}'.format(member), inline=True)
-		emmem.add_field(name='Joined at:', value='{0.joined_at}'.format(member), inline=True)
-
-
-		await self.bot.say(embed=emmem)
+#	@commands.command(pass_context=True)
+#	async def user(self, ctx, member:discord.Member = None):
+#		"""Gets user information"""
+#		emmem = discord.Embed(title='Member Information')
+#
+#
+#		if member is None:
+#			member = ctx.message.author
+#
+#
+#		emmem.set_author(name='{0.display_name}'.format(member), icon_url='{}'.format(member.avatar_url or member.default_avatar_url))
+#		emmem.set_thumbnail(url='{0.avatar_url}'.format(member))
+#		emmem.add_field(name='User ID:', value='{0.id}'.format(member), inline=True)
+#		emmem.add_field(name='Created at:', value='{0.created_at}'.format(member), inline=True)
+#		emmem.add_field(name='Joined at:', value='{0.joined_at}'.format(member), inline=True)
+#
+#
+#		await self.bot.say(embed=emmem)
 
 
 	@commands.command(hidden=True)
