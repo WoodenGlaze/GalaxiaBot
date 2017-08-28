@@ -16,7 +16,7 @@ class StatsTest:
 	@commands.command(hidden=True)
 	@checks.is_owner()
 	async def nuke(self):
-		conn = sqlite3.connect('C:/Users/Glaze/Desktop/DB/stats.db')
+		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		c.execute('''DROP TABLE stats''')
 		await self.bot.say('Dropped table.')
@@ -24,7 +24,7 @@ class StatsTest:
 	@commands.command(hidden=True)
 	@checks.is_owner()
 	async def cdb(self):
-		conn = sqlite3.connect('C:/Users/Glaze/Desktop/DB/stats.db')
+		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		c.execute('''CREATE TABLE stats
              (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
@@ -49,21 +49,24 @@ class StatsTest:
 		rep = '0'
 		thanks = '0'
 		currency = '0'
-		conn = sqlite3.connect('C:/Users/Glaze/Desktop/DB/stats.db')
+		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
-		m = c.execute("SELECT * FROM stats WHERE uid = ('%s')" % ctx.message.author.id)
-		"""if 
+		for row in c.execute('SELECT uid FROM stats WHERE uid = ("%s")' % ctx.message.author.id):
+			await self.bot.say(row)
+		#m = row
+		#if ctx.message.author.id in m: 
 			await self.bot.say('Already registered.')
-		else:"""
-		c.execute("INSERT INTO stats VALUES (?, ?, ?, ?, ?, ?)", (id, user, uid, rep, thanks, currency))
-		await self.bot.say('Registered!')
-		conn.commit()
-		conn.close()
+			conn.close()
+		else:
+			c.execute("INSERT INTO stats VALUES (?, ?, ?, ?, ?, ?)", (id, user, uid, rep, thanks, currency))
+			await self.bot.say('Registered!')
+			conn.commit()
+			conn.close()
 
 
 	@commands.command()
 	async def test(self):
-		conn = sqlite3.connect('C:/Users/Glaze/Desktop/DB/stats.db')
+		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		for row in c.execute('SELECT * FROM stats ORDER BY user'):
 			await self.bot.say(row)
@@ -74,7 +77,7 @@ class StatsTest:
 	async def rep(self, ctx, mem:discord.Member):
 		"""Test reputation command"""
 		user = mem.name
-		conn = sqlite3.connect('C:/Users/Glaze/Desktop/DB/stats.db')
+		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		c.execute("UPDATE stats SET rep = rep + 1 WHERE ('%s');" % mem.id)
 		await self.bot.say('{0.name} has given {1.name} a reputation point!'.format(ctx.message.author, mem))
