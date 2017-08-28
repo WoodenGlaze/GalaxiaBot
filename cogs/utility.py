@@ -72,21 +72,21 @@ class Utility:
 		if member is None:
 			member = ctx.message.author
 		await self.bot.change_nickname(member, nickname)
-
+		
 
 	"""@commands.command()
 	async def prefixes(self):
 		await self.bot.say(prefix)"""
 
 
-#	@commands.command()
-#	async def oauth(self):
-#		"""Gives OAuth link"""
-#		emoauth = discord.Embed(title='OAuth invite link')
-#		client_id =  self.bot.user.id
-#		oauth = discord.utils.oauth_url(client_id, permissions=discord.Permissions.all(), server=None)
-#		emoauth.add_field(name='Link', value='{}'.format(oauth))
-#		await self.bot.say(embed=emoauth)
+	@commands.command()
+	async def oauth(self):
+		"""Gives OAuth link"""
+		emoauth = discord.Embed(title='OAuth invite link')
+		client_id =  self.bot.user.id
+		oauth = discord.utils.oauth_url(client_id, permissions=discord.Permissions.all(), server=None)
+		emoauth.add_field(name='Link', value='{}'.format(oauth))
+		await self.bot.say(embed=emoauth)
 
 
 def setup(bot):

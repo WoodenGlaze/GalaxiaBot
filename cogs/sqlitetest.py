@@ -76,12 +76,8 @@ class StatsTest:
 		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
 		c = conn.cursor()
 		for row in c.execute('SELECT * FROM stats ORDER BY user'):
-			await self.bot.say(str(row).strip("',()"))
-			a = str(row).strip(" '")
-			b = str(a).strip(" ,")
-			c = str(b).strip(" (")
-			d = str(c).strip(" )")
-			await self.bot.say(d)
+			new = str(row).replace("(","").replace(",","").replace("'","").replace(")","")
+			await self.bot.say(new)
 		conn.close()
 
 
@@ -108,9 +104,9 @@ class StatsTest:
 			emmem1.add_field(name='User ID:', value='{0.id}'.format(member), inline=True)
 			emmem1.add_field(name='Created at:', value='{0.created_at}'.format(member), inline=True)
 			emmem1.add_field(name='Joined at:', value='{0.joined_at}'.format(member), inline=True)
-			emmem1.add_field(name='Reputation:', value='{}'.format(str(rep).strip("()")))
-			emmem1.add_field(name='Thanks:', value='{}'.format(str(tnx).strip("()")))		
-			emmem1.add_field(name='Money:', value='{}'.format(str(cur).strip("()")))
+			emmem1.add_field(name='Reputation:', value='{}'.format(str(rep).replace("(","").replace(",","").replace("'","").replace(")","")))
+			emmem1.add_field(name='Thanks:', value='{}'.format(str(tnx).replace("(","").replace(",","").replace("'","").replace(")","")))		
+			emmem1.add_field(name='Money:', value='{}'.format(str(cur).replace("(","").replace(",","").replace("'","").replace(")","")))
 			await self.bot.say(embed=emmem1)
 			conn.close()
 		else:
