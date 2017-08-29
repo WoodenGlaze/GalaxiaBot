@@ -147,11 +147,7 @@ class Utility:
 					status = 'Behind by 1 release%s [Latest update.](%s)' % (branch_note, gist_latest)
 				else:
 					status = '%s releases behind%s [Latest updates.](%s)' % (version, branch_note, gist_latest)
-
-
-
 		await self.bot.say(embed=em)
-
 
 
 #def setup(bot):
