@@ -5,7 +5,7 @@ import sqlite3
 
 from discord.ext import commands
 from cogs.utils import checks
-db = '/opt/Galaxia/GalaxiaBot/DB/stats.db'
+db = '/opt/Galaxia/GalaxiaBot/cogs/DB/stats.db'
 
 class StatsTest:
 

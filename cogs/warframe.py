@@ -2,7 +2,7 @@ import discord
 import sqlite3
 from discord.ext import commands
 from cogs.utils import checks
-db = '/opt/Galaxia/GalaxiaBot/DB/warframe.db'
+db = '/opt/Galaxia/GalaxiaBot/cogs/DB/warframe.db'
 
 
 class warframe:
