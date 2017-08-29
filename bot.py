@@ -318,6 +318,11 @@ async def on_ready():
     print('Sharding:')
     print(bot.shard_count)
     print('------')
+    
+
+
+
+    
     await bot.change_presence(game=discord.Game(name='{}'.format(status,)), status=discord.Status.dnd)
 
 
