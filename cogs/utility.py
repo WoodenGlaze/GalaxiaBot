@@ -149,7 +149,11 @@ class Utility:
 					status = '%s releases behind%s [Latest updates.](%s)' % (version, branch_note, gist_latest)
 
 
-			await self.bot.say(content=None, embed=em)
+			await self.bot.say(embed=em)
 
+
+
+#def setup(bot):
+#	bot.add_cog(Utility(bot))
 def setup(bot):
 	bot.add_cog(Utility(bot))
