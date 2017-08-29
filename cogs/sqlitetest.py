@@ -1,6 +1,6 @@
 import discord
 import sqlite3
-
+import git
 
 
 from discord.ext import commands

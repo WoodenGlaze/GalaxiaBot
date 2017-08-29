@@ -4,7 +4,9 @@ from cogs.utils import checks
 import discord
 import inspect
 import asyncio
-
+import datetime
+import git
+from PythonGists import PythonGists
 
 version = '0.0.3a'
 
@@ -104,6 +106,70 @@ class Utility:
 		oauth = discord.utils.oauth_url(client_id, permissions=discord.Permissions.all(), server=None)
 		emoauth.add_field(name='Link', value='{}'.format(oauth))
 		await self.bot.say(embed=emoauth)
+
+
+	@commands.command(pass_context=True)
+	async def status(self, ctx):
+        """Bot stats."""
+        uptime = (datetime.datetime.now() - self.bot.uptime)
+        hours, rem = divmod(int(uptime.total_seconds()), 3600)
+        minutes, seconds = divmod(rem, 60)
+        days, hours = divmod(hours, 24)
+        if days:
+            time = '%s days, %s hours, %s minutes, and %s seconds' % (days, hours, minutes, seconds)
+        else:
+            time = '%s hours, %s minutes, and %s seconds' % (hours, minutes, seconds)
+        game = self.bot.game
+        if not game:
+            game = 'None'
+        channel_count = 0
+        for guild in self.bot.guilds:
+            channel_count += len(guild.channels)
+
+		em = discord.Embed(title='Bot Stats', color=0x32441c)
+		em.add_field(name=u'\U0001F553 Uptime', value=time, inline=False)
+		em.add_field(name=u'\U0001F4E4 Msgs sent', value=str(self.bot.icount))
+		em.add_field(name=u'\U0001F4E5 Msgs received', value=str(self.bot.message_count))
+		em.add_field(name=u'\u2757 Mentions', value=str(self.bot.mention_count))
+		em.add_field(name=u'\u2694 Servers', value=str(len(self.bot.guilds)))
+		em.add_field(name=u'\ud83d\udcd1 Channels', value=str(channel_count))
+		em.add_field(name=u'\u270F Keywords logged', value=str(self.bot.keyword_log))
+		g = u'\U0001F3AE Game'
+		if '=' in game: g = '\ud83c\udfa5 Stream'
+			em.add_field(name=g, value=game)
+		mem_usage = '{:.2f} MiB'.format(__import__('psutil').Process().memory_full_info().uss / 1024 ** 2)
+		em.add_field(name=u'\U0001F4BE Memory usage:', value=mem_usage)
+		try:
+			g = git.cmd.Git(working_dir=os.getcwd())
+			branch = g.execute(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+			g.execute(["git", "fetch", "origin", branch])
+			version = g.execute(["git", "rev-list", "--right-only", "--count", "{}...origin/{}".format(branch, branch)])
+			if branch == "master":
+				branch_note = "."
+			else:
+				branch_note = " (`" + branch + "` branch)."
+			if version == '0':
+				status = 'Up to date%s' % branch_note
+			else:
+			latest = g.execute(
+				["git", "log", "--pretty=oneline", "--abbrev-commit", "--stat", "--pretty", "-%s" % version,
+ 				"origin/%s" % branch])
+			gist_latest = PythonGists.Gist(description='Latest changes for the selfbot.', content=latest,
+											name='latest.txt')
+			if version == '1':
+				status = 'Behind by 1 release%s [Latest update.](%s)' % (branch_note, gist_latest)
+			else:
+				status = '%s releases behind%s [Latest updates.](%s)' % (version, branch_note, gist_latest)
+			em.add_field(name=u'\U0001f4bb Update status:', value=status)
+            except:
+                pass
+            await ctx.send(content=None, embed=em)
+        else:
+            msg = '**Bot Stats:** ```Uptime: %s\nMessages Sent: %s\nMessages Received: %s\nMentions: %s\nguilds: %s\nKeywords logged: %s\nGame: %s```' % (
+            time, str(self.bot.icount), str(self.bot.message_count), str(self.bot.mention_count),
+            str(len(self.bot.guilds)), str(self.bot.keyword_log), game)
+            await ctx.send(self.bot.bot_prefix + msg)
+        await ctx.message.delete()		
 
 
 def setup(bot):
