@@ -37,6 +37,7 @@ initial_extensions = [
     'cogs.botadmin',
     'cogs.utility',
     'cogs.sqlitetest',
+    'cogs.warframe'
 
 
 ]
@@ -325,10 +326,15 @@ async def on_resumed():
 	print('Connection was lost but is back again.')
 
 
-@bot.event
-async def on_member_join(member):
-	server = member.server
-	await bot.add_roles(member, discord.Object(316201434561642496))
+
+
+
+
+@bot.command()
+async def ca(hidden=True):
+    with open('Galaxia.PNG', 'rb') as avatar:
+        await bot.edit_profile(password=None, new_password=None, email=None, username=None, avatar=avatar.read())
+
 
 
 @bot.event

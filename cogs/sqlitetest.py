@@ -2,9 +2,10 @@ import discord
 import sqlite3
 
 
+
 from discord.ext import commands
 from cogs.utils import checks
-
+db = '/opt/Galaxia/GalaxiaBot/DB/stats.db'
 
 class StatsTest:
 
@@ -16,7 +17,8 @@ class StatsTest:
 	@commands.command(hidden=True)
 	@checks.is_owner()
 	async def nuke(self):
-		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		await self.bot.say('DB is located in: {}'.format(db))
+		conn = sqlite3.connect('{}'.format(db))
 		c = conn.cursor()
 		c.execute('''DROP TABLE stats''')
 		c.execute('''CREATE TABLE stats
@@ -33,7 +35,7 @@ class StatsTest:
 	@commands.command(hidden=True)
 	@checks.is_owner()
 	async def cdb(self):
-		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		conn = sqlite3.connect('{}'.format(db))
 		c = conn.cursor()
 		c.execute('''CREATE TABLE stats
              (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
@@ -58,7 +60,7 @@ class StatsTest:
 		rep = '0'
 		thanks = '0'
 		currency = '0'
-		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		conn = sqlite3.connect('{}'.format(db))
 		c = conn.cursor()
 		for row in c.execute('SELECT uid FROM stats WHERE uid = ("%s")' % ctx.message.author.id):
 			await self.bot.say(row)
@@ -73,7 +75,7 @@ class StatsTest:
 
 	@commands.command()
 	async def test(self):
-		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		conn = sqlite3.connect('{}'.format(db))
 		c = conn.cursor()
 		for row in c.execute('SELECT * FROM stats ORDER BY user'):
 			new = str(row).replace("(","").replace(",","").replace("'","").replace(")","")
@@ -84,7 +86,7 @@ class StatsTest:
 	@commands.command(pass_context=True)
 	async def user(self, ctx, member:discord.Member = None):
 		"""Gets user information"""
-		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		conn = sqlite3.connect('{}'.format(db))
 		c = conn.cursor()
 		emmem1 = discord.Embed(title='Member Information')
 		emmem2 = discord.Embed(title='Member Information')
@@ -123,7 +125,7 @@ class StatsTest:
 	async def rep(self, ctx, mem:discord.Member):
 		"""Test reputation command"""
 		user = mem.name
-		conn = sqlite3.connect('C:/Users/Dion/Desktop/GalaxiaBot/cogs/DB/stats.db')
+		conn = sqlite3.connect('{}'.format(db))
 		c = conn.cursor()
 		if mem.id == ctx.message.author.id:
 			await self.bot.say("You cannot give yourself a reputation point!")
@@ -132,6 +134,7 @@ class StatsTest:
 			await self.bot.say('{0.name} has given {1.name} a reputation point!'.format(ctx.message.author, mem))
 			conn.commit()
 			conn.close()
+
 
 
 

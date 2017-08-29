@@ -61,3 +61,12 @@ def is_in_servers(*server_ids):
 
 def is_lounge_cpp():
     return is_in_servers('145079846832308224')
+
+
+def embed_perms(message):
+    try:
+        check = message.author.permissions_in(message.channel).embed_links
+    except:
+        check = True
+
+    return check

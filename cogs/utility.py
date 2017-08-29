@@ -1,5 +1,6 @@
 from discord.ext import commands
 from .utils import checks
+from cogs.utils import checks
 import discord
 import inspect
 import asyncio
@@ -32,6 +33,22 @@ class Utility:
 		emin.add_field(name='Inspiration:', value='<@130512502302834688>')
 		emin.add_field(name='Author:', value=owner)
 		await self.bot.say(embed=emin)
+
+
+	@commands.command(pass_context=True)
+	async def about(self, ctx, txt: str =None):
+		"""New about command."""
+		if txt != 'short':
+			em = discord.Embed(color=0x42f4df, title='Galaxia Bot V2',
+				description='Galaxia is an allround bot, with stats, user info and other useful information!')
+			em.add_field(name='Contribute here:',
+				value='[Github link](https://github.com/WoodenGlaze/GalaxiaBot)')
+			em.add_field(name='Quick Examples:', value='g)user, g)register, g)play')
+			if txt == 'link': em.add_field(name='Official Discord Server:', value='Join the official Discord server [here](https://discord.gg/rK4M7st)')
+			em.set_footer(text='Made by Hopes and Dreams#4827 & 𝕁𝕒𝕜𝕠𝕓#5771', icon_url='http://i.imgur.com/e5L7fJr.png')
+			await self.bot.say(content=None, embed=em)
+		else:
+			await self.bot.say('https://github.com/WoodenGlaze/GalaxiaBot')
 
 
 #	@commands.command(pass_context=True)
@@ -72,7 +89,7 @@ class Utility:
 		if member is None:
 			member = ctx.message.author
 		await self.bot.change_nickname(member, nickname)
-		
+
 
 	"""@commands.command()
 	async def prefixes(self):
