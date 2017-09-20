@@ -16,7 +16,7 @@ from cogs.utils import checks
 from discord.ext import commands
 from discord.ext.commands import Bot
 from datetime import datetime
-
+b = DBans(token="CAXOsqkioa")
 
 #bot starts here:
 
@@ -294,7 +294,7 @@ if True == True:
 	status = credentials['status']
 	botowner = credentials['botowner']
 	shards = credentials['sharding']
-    b = DBans(token="CAXOsqkioa")
+
 
 #define bot and prefix
 description = """Galaxia Private Bot \n type g)help for a list of commands."""
