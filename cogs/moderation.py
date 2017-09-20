@@ -1,13 +1,15 @@
 import discord
 from discord.ext import commands
 from dbans import DBans
+b = DBans(token="CAXOsqkioa")
+
 
 class Moderation:
 
 
 	def __init__(self, bot):
 		self.bot = bot
-		b = DBans(token="CAXOsqkioa")
+
 
 	@commands.command()
 	@commands.has_permissions(kick_members = True)
