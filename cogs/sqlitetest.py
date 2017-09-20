@@ -71,7 +71,7 @@ class StatsTest:
 			await self.bot.say('Registered!')
 			conn.commit()
 			conn.close()
-
+			c.execute('INSERT INTO ("%s") VALUES (?, ?, ?, ?, ?, ?)' % tablename, (id, user, uid, rep, thanks, currency))
 
 	@commands.command()
 	async def test(self):

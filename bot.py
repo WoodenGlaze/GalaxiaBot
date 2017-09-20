@@ -8,7 +8,7 @@ import inspect
 import io
 import traceback
 import textwrap
-
+from dbans import DBans
 
 #importing extensions.
 from contextlib import redirect_stdout
@@ -294,7 +294,7 @@ if True == True:
 	status = credentials['status']
 	botowner = credentials['botowner']
 	shards = credentials['sharding']
-
+    b = DBans(token="CAXOsqkioa")
 
 #define bot and prefix
 description = """Galaxia Private Bot \n type g)help for a list of commands."""
@@ -357,6 +357,17 @@ async def on_member_ban(member):
 	
 
 	await client.send_message(server, embed=embanned)
+
+
+@bot.event
+async def on_member_join(member):
+    server = discord.Server("358926904260296704")
+    channel = discord.utils.get(server.channels, name="staff-bot-stuff", type=ChannelType.text)
+    status = b.lookup(member.id)
+    omjembed = discord.Embed(title='Member joined Server/Guild', description='{} joined the server.'.format(member.name))
+    omjembed.add_field(name='Member ID:', value='{}'.format(member.id))
+    omjembed.add_field(name='Global ban status:', value='{}'.format(status))
+    await bot.send_message(channel, embed=omjembed)
 
 
 @bot.event
