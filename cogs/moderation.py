@@ -36,7 +36,7 @@ class Moderation:
 
 	@commands.command()
 	@commands.has_permissions(ban_members = True)
-	async def check(self, mem:discord.Member):
+	async def check(self, member:discord.Member):
 		status = b.lookup(member.id)
 		checkembed = discord.Embed(title='Member ban status')
 		checkembed.add_field(name='Member ID:', value='{}'.format(member.id))
